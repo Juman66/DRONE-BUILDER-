@@ -1,39 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Drone Builder</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Builder – UAV Configurator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div id="stars"></div>
 
-<div class="container">
+    <header>
+        <div class="logo">
+            <svg class="logo-svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <line x1="20" y1="20" x2="4" y2="4" stroke="#00d4ff" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="20" y1="20" x2="36" y2="4" stroke="#00d4ff" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="20" y1="20" x2="4" y2="36" stroke="#00d4ff" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="20" y1="20" x2="36" y2="36" stroke="#00d4ff" stroke-width="2.2" stroke-linecap="round"/>
+                <circle cx="4" cy="4" r="3.5" fill="#ff6b00"/>
+                <circle cx="36" cy="4" r="3.5" fill="#ff6b00"/>
+                <circle cx="4" cy="36" r="3.5" fill="#ff6b00"/>
+                <circle cx="36" cy="36" r="3.5" fill="#ff6b00"/>
+                <rect x="14" y="14" width="12" height="12" rx="3" fill="#0d1428" stroke="#00d4ff" stroke-width="1.5"/>
+                <circle cx="20" cy="20" r="3" fill="#00d4ff" opacity=".75"/>
+            </svg>
+            <div class="logo-text">
+                <h1>DRONE BUILDER</h1>
+                <p>Custom UAV Configurator</p>
+            </div>
+        </div>
+        <div class="hdr-stats">
+            <div class="hstat"><span class="hstat-val" id="h-w">—</span><span class="hstat-lbl">Weight</span></div>
+            <div class="hstat"><span class="hstat-val" id="h-t">—</span><span class="hstat-lbl">Flight Time</span></div>
+            <div class="hstat"><span class="hstat-val" id="h-s">—</span><span class="hstat-lbl">Top Speed</span></div>
+            <div class="hstat"><span class="hstat-val" id="h-c" style="color:var(--accent2)">₹0</span><span class="hstat-lbl">Cost</span></div>
+        </div>
+    </header>
 
-  <!-- LEFT -->
-  <div class="left">
-    <div class="header">
-      <h1>🚀 Drone Builder</h1>
-      <p>Build your custom drone</p>
+    <div class="main">
+        <div class="cfg">
+            <div class="section open" id="s1">
+                <div class="shdr" onclick="tog('s1')">
+                    <div class="sleft">
+                        <div class="sbadge">🚁</div>
+                        <div>
+                            <div class="stitle">Frame Configuration</div>
+                            <div class="snum">CATEGORY 01</div>
+                        </div>
+                    </div>
+                    <span class="sarr">▲</span>
+                </div>
+                <div class="sbody">
+                    <div class="scont">
+                        <div class="subg">
+                            <div class="subt">Drone Type</div>
+                            <div class="field"><span class="flbl">Configuration</span>
+                                <select id="d-type" onchange="upd()">
+                                    <option value="">-Select frame type</option>
+                                    <option value="Quadcopter|120">Quadcopter (4 motors)</option>
+                                    <option value="Hexacopter|180">Hexacopter (6 motors)</option>
+                                    <option value="Octocopter|240">Octocopter (8 motors)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="subg">
+                            <div class="subt">Frame Type</div>
+                            <div class="field"><span class="flbl">Style / Purpose</span>
+                                <select id="f-type" onchange="filterOptions()">
+                                    <option value="">— Select frame type —</option>
+                                    <option value="Racing">Racing</option>
+                                    <option value="Freestyle">Freestyle</option>
+                                    <option value="Cinematic">Cinematic</option>
+                                    <option value="Agriculture">Agriculture</option>
+                                    <option value="Prototype">Prototype</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="subg">
+                            <div class="subt">Frame Size</div>
+                            <div class="field"><span class="flbl">Inch Class</span>
+                                <select id="f-size" onchange="upd()">
+                                    <option value="">— Select frame type first —</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="subg">
+                            <div class="subt">Frame Model</div>
+                            <div class="field"><span class="flbl">Model</span>
+                                <select id="f-model" onchange="upd()">
+                                    <option value="">— Select frame type first —</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="s2">
+                <div class="shdr" onclick="tog('s2')">
+                    <div class="sleft">
+                        <div class="sbadge or">⚙️</div>
+                        <div>
+                            <div class="stitle">Motors & Propellers</div>
+                            <div class="snum">CATEGORY 02</div>
+                        </div>
+                    </div>
+                    <span class="sarr">▼</span>
+                </div>
+                <div class="sbody">
+                    <div class="scont">
+                        <div class="subg">
+                            <div class="subt">Motors</div>
+                            <div class="field"><span class="flbl">Motor Model</span>
+                                <select id="m-model" onchange="upd()">
+                                    <option value="">— Select model —</option>
+                                    <option value="T-Motor F60 Pro IV|7350">T-Motor F60 Pro IV – ₹7,350/ea</option>
+                                    <option value="iFlight Xing-E 2306|2000">iFlight Xing-E 2306 – ₹2,000/ea</option>
+                                    <option value="Emax Eco II 2306|1500">Emax Eco II 2306 – ₹1,500/ea</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="subg">
+                            <div class="subt">Propellers</div>
+                            <div class="field"><span class="flbl">Propeller Model</span>
+                                <select id="p-model" onchange="upd()">
+                                    <option value="">— Select model —</option>
+                                    <option value="HQ 5.1x4.1x3|670">HQ 5.1x4.1x3 Tri-Blade – ₹670/pair</option>
+                                    <option value="Gemfan 7045|1000">Gemfan 7045 Bi-Blade – ₹1,000/pair</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="s3">
+                <div class="shdr" onclick="tog('s3')">
+                    <div class="sleft"><div class="sbadge pu">🔌</div>
+                        <div><div class="stitle">Electronics</div><div class="snum">CATEGORY 03</div></div>
+                    </div>
+                    <span class="sarr">▼</span>
+                </div>
+                <div class="sbody"><div class="scont">
+                    <div class="subg">
+                        <div class="subt">ESC</div>
+                        <div class="field"><span class="flbl">ESC Model</span>
+                            <select id="e-model" onchange="upd()">
+                                <option value="">— Select ESC —</option>
+                                <option value="Tekko32 F4 Metal|6260">Tekko32 F4 Metal 45A – ₹6,260</option>
+                                <option value="BLHeli32 30A AIO|4590">BLHeli32 30A 4-in-1 – ₹4,590</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="subg">
+                        <div class="subt">Flight Controller</div>
+                        <div class="field"><span class="flbl">FC Model</span>
+                            <select id="fc" onchange="upd()">
+                                <option value="">— Select FC —</option>
+                                <option value="SpeedyBee F405|4590">SpeedyBee F405 Wing – ₹4,590</option>
+                                <option value="Matek F722-SE|7100">Matek F722-SE – ₹7,100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div></div>
+            </div>
+
+            <div class="section" id="s4">
+                <div class="shdr" onclick="tog('s4')">
+                    <div class="sleft"><div class="sbadge gr">⚡</div>
+                        <div><div class="stitle">Power Supply</div><div class="snum">CATEGORY 04</div></div>
+                    </div>
+                    <span class="sarr">▼</span>
+                </div>
+                <div class="sbody"><div class="scont">
+                    <div class="subg">
+                        <div class="subt">Battery</div>
+                        <div class="field"><span class="flbl">Battery Model</span>
+                            <select id="b-model" onchange="upd()">
+                                <option value="">— Select Battery —</option>
+                                <option value="Tattu R-Line 4S|3170">Tattu R-Line 4S 1300mAh – ₹3,170</option>
+                                <option value="CNHL Black 6S|3750">CNHL Black 6S 1100mAh – ₹3,750</option>
+                            </select>
+                        </div>
+                    </div>
+                </div></div>
+            </div>
+
+            <div class="section" id="s5">
+                <div class="shdr" onclick="tog('s5')">
+                    <div class="sleft"><div class="sbadge ye">🎯</div>
+                        <div><div class="stitle">Optional Parts</div><div class="snum">CATEGORY 05</div></div>
+                    </div>
+                    <span class="sarr">▼</span>
+                </div>
+                <div class="sbody"><div class="scont">
+                    <div class="subg">
+                        <div class="subt">GPS Module</div>
+                        <select id="gps" onchange="upd()">
+                            <option value="">— None —</option>
+                            <option value="BN-880|1840">BN-880 GPS + Compass – ₹1,840</option>
+                        </select>
+                    </div>
+                    <div class="subg">
+                        <div class="subt">Camera</div>
+                        <select id="cam" onchange="upd()">
+                            <option value="">— None —</option>
+                            <option value="Runcam Phoenix 2|2920">Runcam Phoenix 2 Nano – ₹2,920</option>
+                            <option value="GoPro Hero 12|33400">GoPro Hero 12 Black – ₹33,400</option>
+                        </select>
+                    </div>
+                    <div class="subg">
+                        <div class="subt">VTX</div>
+                        <select id="vtx-model" onchange="upd()">
+                            <option value="">— None —</option>
+                            <option value="DJI O3 Air Unit|16620">DJI O3 Air Unit Digital – ₹16,620</option>
+                            <option value="Rush Tank|3760">Rush Tank Analog 2.5W – ₹3,760</option>
+                        </select>
+                    </div>
+                </div></div>
+            </div>
+        </div>
+
+        <div class="pv">
+            <div class="pvlbl">Drone Preview</div>
+            <div class="dcanvas">
+                <div class="cgrid"></div>
+                <div class="ring" style="width:46px;height:46px;top:20%;left:12%;animation-delay:0s"></div>
+                <div class="ring" style="width:46px;height:46px;top:20%;right:12%;animation-delay:.5s"></div>
+                <div class="ring" style="width:46px;height:46px;bottom:18%;left:12%;animation-delay:1s"></div>
+                <div class="ring" style="width:46px;height:46px;bottom:18%;right:12%;animation-delay:1.5s"></div>
+                <div class="dwrap">
+                    <svg width="190" height="190" viewBox="0 0 190 190" fill="none">
+                        <line x1="95" y1="95" x2="28" y2="28" stroke="#00d4ff" stroke-width="2.2" stroke-linecap="round"/>
+                        <line x1="95" y1="95" x2="162" y2="28" stroke="#00d4ff" stroke-width="2.2" stroke-linecap="round"/>
+                        <line x1="95" y1="95" x2="28" y2="162" stroke="#00d4ff" stroke-width="2.2" stroke-linecap="round"/>
+                        <line x1="95" y1="95" x2="162" y2="162" stroke="#00d4ff" stroke-width="2.2" stroke-linecap="round"/>
+                        <circle cx="28" cy="28" r="8" fill="#0d1428" stroke="#ff6b00" stroke-width="1.6"/>
+                        <circle cx="162" cy="28" r="8" fill="#0d1428" stroke="#ff6b00" stroke-width="1.6"/>
+                        <circle cx="28" cy="162" r="8" fill="#0d1428" stroke="#ff6b00" stroke-width="1.6"/>
+                        <circle cx="162" cy="162" r="8" fill="#0d1428" stroke="#ff6b00" stroke-width="1.6"/>
+                        <g class="pg p1" style="transform-origin:28px 28px"><ellipse cx="28" cy="28" rx="22" ry="4" fill="rgba(0,212,255,.22)" stroke="rgba(0,212,255,.45)" stroke-width=".8"/></g>
+                        <g class="pg p2" style="transform-origin:162px 28px"><ellipse cx="162" cy="28" rx="22" ry="4" fill="rgba(0,212,255,.22)" stroke="rgba(0,212,255,.45)" stroke-width=".8"/></g>
+                        <g class="pg p3" style="transform-origin:28px 162px"><ellipse cx="28" cy="162" rx="22" ry="4" fill="rgba(0,212,255,.22)" stroke="rgba(0,212,255,.45)" stroke-width=".8"/></g>
+                        <g class="pg p4" style="transform-origin:162px 162px"><ellipse cx="162" cy="162" rx="22" ry="4" fill="rgba(0,212,255,.22)" stroke="rgba(0,212,255,.45)" stroke-width=".8"/></g>
+                        <rect x="76" y="76" width="38" height="38" rx="7" fill="#090e1c" stroke="#00d4ff" stroke-width="1.6"/>
+                        <rect x="80" y="80" width="30" height="30" rx="5" fill="rgba(0,212,255,.04)"/>
+                        <line x1="82" y1="114" x2="75" y2="136" stroke="#182040" stroke-width="1.6" stroke-linecap="round"/>
+                        <line x1="108" y1="114" x2="115" y2="136" stroke="#182040" stroke-width="1.6" stroke-linecap="round"/>
+                        <line x1="70" y1="136" x2="120" y2="136" stroke="#182040" stroke-width="2" stroke-linecap="round"/>
+                        <rect x="84" y="68" width="22" height="11" rx="3" fill="#090e1c" stroke="#7c3aed" stroke-width="1.2"/>
+                        <circle cx="95" cy="73" r="3.5" fill="#7c3aed" opacity=".65"/>
+                        <circle cx="95" cy="95" r="4.5" fill="#00d4ff" opacity=".72"/>
+                        <circle cx="95" cy="95" r="9" fill="none" stroke="#00d4ff" stroke-width=".8" opacity=".25"/>
+                    </svg>
+                </div>
+                <div class="cstatus"><span class="live"></span>Real-time Preview</div>
+            </div>
+
+            <div class="sgrid">
+                <div class="scard"><div class="snm">Est. Weight</div><div class="svl" id="sv-w">—</div><div class="bbar"><div class="bfill" id="sb-w"></div></div></div>
+                <div class="scard"><div class="snm">Flight Time</div><div class="svl" id="sv-t">—</div><div class="bbar"><div class="bfill" id="sb-t"></div></div></div>
+                <div class="scard"><div class="snm">Top Speed</div><div class="svl" id="sv-s">—</div><div class="bbar"><div class="bfill" id="sb-s"></div></div></div>
+                <div class="scard"><div class="snm">Build Cost</div><div class="svl or" id="sv-c">₹0</div><div class="bbar"><div class="bfill cost" id="sb-c"></div></div></div>
+            </div>
+
+            <div class="cbox">
+                <div class="chdr">Selected Components</div>
+                <div class="clist" id="clist">
+                    <div class="ehint"><span class="ei">🚁</span>Configure your drone to see parts</div>
+                </div>
+                <div class="trow">
+                    <span class="tlbl">Total Build Cost</span>
+                    <span class="tval" id="t-val">₹0</span>
+                </div>
+                <button class="cta" onclick="buildDrone()">▶ GENERATE BUILD REPORT</button>
+            </div>
+        </div>
     </div>
 
-    <div id="categories"></div>
-  </div>
+    <div class="toast" id="toast"><span id="t-icon">✅</span>&nbsp;<span id="t-msg"></span></div>
 
-  <!-- RIGHT -->
-  <div class="right">
-    <div class="preview">
-      <h3>Drone Preview</h3>
-      <img id="droneImage" src="https://via.placeholder.com/400x250">
-    </div>
-
-    <div class="summary">
-      <h3>Selected Components</h3>
-      <div id="summary"></div>
-    </div>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
